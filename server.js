@@ -1,19 +1,26 @@
 var http = require("http");
 const host = "localhost";
 const port = "8081";
+const hghg = require('./hghg');
 var server = http.createServer((req, res) => {
-  var c = new thisInTheReturnObject();
-  console.log(c.a());
-  thisInsideFunction(4,5);
-  thisInTheArrowedFunction();
-  thisInTheNestedObject();
+  // var c = new thisInTheReturnObject();
+  // console.log(c.a());
+  // thisInsideFunction(4,5);
+  // thisInTheArrowedFunction();
+  // thisInTheNestedObject();
   res.statusCode = 200;
   res.setHeader("Content-Type", "text/plain");
   res.end("Hello world");
+  hghg.dog();
 });
 server.listen(port, host, () => {
   console.log(`Server is running on http://${host}:${port}`);
 });
+
+function partitionedAvg(n, avgCB){
+  
+}
+
 
 function thisInsideFunction(id, num) {
   this.id = id;
@@ -64,3 +71,7 @@ function thisInTheNestedObject() {
   console.log(f() == globalObject);
 }
 
+process.on('uncaughtException',(err)=>{
+  console.error(err);
+  process.exit(1);
+})
