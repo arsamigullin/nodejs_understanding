@@ -1,50 +1,23 @@
 const smooth = require('./sqrSmooth');
+const testData = require('./amaTestData');
+const amaConfing = require('./amaConfig');
+const stdDev = require('./../stddev');
+
+
 module.exports = {
     runAma : function (){
-        let data = [
-            {
-                close:6063,
-            },
-            {
-                close:6041,
-            },
-            {
-                close:6065,
-            },
-            {
-                close:6078,
-            },
-            {
-                close:6114,
-            },
-            {
-                close:6121,
-            },
-            {
-                close:6106,
-            },
-            {
-                close:6101,
-            },
-            {
-                close:6166,
-            },
-            {
-                close:6169,
-            },
-            {
-                close:6195,
-            },
-            {
-                close:6222,
-            },
-            {
-                close:6186,
-            },
-            {
-                close:6214,
-            }
-        ]
+        let data = testData.getClosePrices();
         let smoothVals = smooth.getSqrSmoothVals(data);
+        let range = amaConfing.erRange; 
+        let maxIndex = range-1;
+        let AMA = [];
+        for (let i = 0; i< range;i++){
+            AMA.push(data[i].close);
+        }
+        stdDev.stdDev(AMA);
+        for(let i = 1; i<=data.length-range; i++){
+            AMA.push(AMA[i+maxIndex-2]+ smoothVals[i-1]*(data[i+maxIndex].close-AMA[i+maxIndex-2]));
+        }
+        stdDev.stdDev(AMA);
     }
 }
